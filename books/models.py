@@ -7,4 +7,9 @@ class Book(models.Model):
     isbn = models.CharField(max_length=17)
 
 
-class 
+class Author(models.Model):
+    first_name = models.CharField(max_length=100)
+    last_name = models.CharField(max_length=100)
+    email = models.EmailField()
+    bio = models.TextField()
+    
