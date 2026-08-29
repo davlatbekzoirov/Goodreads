@@ -12,22 +12,30 @@ class RegisterView(View):
         return render(request, "users/register.html", context=context)
 
     def post(self, request):
-        username = request.POST['username']
-        first_name = request.POST['first_name']
-        last_name = request.POST['last_name']
-        email = request.POST['email']
-        password = request.POST['password']
+        create_form = UserCreateForm(data=request.POST)
 
-        user = User.objects.create(
-            username=username,
-            first_name=first_name,
-            last_name=last_name,
-            email=email
-        )
-        user.set_password(password)
-        user.save()
+        if create_form.is_valid:
+            username = request.POST['username']
+            first_name = request.POST['first_name']
+            last_name = request.POST['last_name']
+            email = request.POST['email']
+            password = request.POST['password']
 
-        return redirect('users:login')
+            user = User.objects.create(
+                username=username,
+                first_name=first_name,
+                last_name=last_name,
+                email=email
+            )
+            user.set_password(password)
+            user.save()
+
+            return redirect('users:login')
+        else:
+            context = {
+                "form": create_form
+            }
+            return render(request, "users/register.html", context=context)
 
 class LoginView(View):
     def get(self, request):
