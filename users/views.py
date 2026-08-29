@@ -1,10 +1,15 @@
 from django.shortcuts import render, redirect
 from django.contrib.auth.models import User
 from django.views import View
+from .forms import UserCreateForm
 
 class RegisterView(View):
     def get(self, request):
-        return render(request, "users/register.html")
+        create_form = UserCreateForm()
+        context = {
+            "form": create_form
+        }
+        return render(request, "users/register.html", context=context)
 
     def post(self, request):
         username = request.POST['username']
