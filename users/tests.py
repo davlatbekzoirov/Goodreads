@@ -1,9 +1,10 @@
 from django.contrib.auth.models import User
 from django.test import TestCase
+from django.urls import reverse
 
 class RegisterTestCase(TestCase):
     def test_user_account_is_created(self):
-        self.client.post('/users/register', data={
+        self.client.post(reverse('users:register'), data={
             'username':'dave', 
             'first_name':'Dave', 
             'last_name': 'Zoirov', 
@@ -17,3 +18,16 @@ class RegisterTestCase(TestCase):
         self.assertEqual(user.email, 'davlatbekzoirov08@gmail.com')
         self.assertNotEqual(user.password, 'dave')
         self.assertTrue(user.check_password('dave'))
+
+    def test_required_fields(self):
+        response = self.client.post(reverse('users:register'), data={
+            'first_name':'Dave', 
+            'email': 'davlatbekzoirov08@gmail.com',
+        })
+
+        user_count = User.objects.count()
+
+        self.assertEqual(user_count, 0)
+        form = response.context['form']
+        self.assertFormError(form, 'username', 'This field is required.')
+        self.assertFormError(form, 'password', 'This field is required.')

@@ -14,7 +14,7 @@ class RegisterView(View):
     def post(self, request):
         create_form = UserCreateForm(data=request.POST)
 
-        if create_form.is_valid:
+        if create_form.is_valid():
             create_form.save()
 
             return redirect('users:login')
