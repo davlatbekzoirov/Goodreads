@@ -31,3 +31,18 @@ class RegisterTestCase(TestCase):
         form = response.context['form']
         self.assertFormError(form, 'username', 'This field is required.')
         self.assertFormError(form, 'password', 'This field is required.')
+
+    def test_invalid_email(self):
+        response = self.client.post(reverse('users:register'), data={
+            'username':'dave', 
+            'first_name':'Dave', 
+            'last_name': 'Zoirov', 
+            'email': 'davlatbekzoirov08',
+            'password': 'dave'
+        })
+
+        user_count = User.objects.count()
+        
+        self.assertEqual(user_count, 0)
+        form = response.context['form']
+        self.assertFormError(form, 'email', 'Enter a valid email address.')
