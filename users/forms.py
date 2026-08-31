@@ -37,3 +37,7 @@ class UserCreateForm(forms.ModelForm):
         user.save()
 
         return user
+
+class UserLoginForm(forms.Form):
+    username = forms.CharField(max_length=150)
+    password = forms.CharField(max_length=128)
