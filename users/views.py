@@ -28,4 +28,7 @@ class LoginView(View):
     def get(self, request):
         login_form = UserLoginForm()
 
-        return render(request, "users/login.html", {"login_form": login_form})
+        context = {
+            "login_form": login_form,
+        }
+        return render(request, "users/login.html", context)
