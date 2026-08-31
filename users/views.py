@@ -32,3 +32,14 @@ class LoginView(View):
             "login_form": login_form,
         }
         return render(request, "users/login.html", context)
+
+    def post(self, request):
+        login_form = UserLoginForm(data=request.POST)
+
+        if login_form.is_valid():
+            pass
+        else:
+            context = {
+                "login_form": login_form,
+            }
+            return render(request, "users/login.html", context)
