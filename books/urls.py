@@ -5,4 +5,5 @@ app_name="books"
 
 urlpatterns = [
     path('', views.BooksView.as_view(), name='list'),
+    path('<int:id>/', views.BookDetailView.as_view(), name='detail'),
 ]
