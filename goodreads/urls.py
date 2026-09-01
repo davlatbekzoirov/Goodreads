@@ -4,6 +4,7 @@ from .views import landing_page
 
 urlpatterns = [
     path('admin/', admin.site.urls),
-    path('users/', include('users.urls'), name='users'),
+    path('users/', include('users.urls')),
+    path('books/', include('books.urls')),
     path('', landing_page, name='landing_page')
 ]
